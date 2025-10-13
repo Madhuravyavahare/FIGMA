@@ -1,0 +1,489 @@
+/* GLOBAL RESETS AND BASE STYLES */
+:root {
+    --primary-color: #7f00ff; /* Purple for key elements */
+    --secondary-color: #ff9900; /* Orange for secondary elements */
+    --danger-color: #f87171; /* Red for alerts/negative stats */
+    --text-color: #333;
+    --text-light: #888;
+    --background-light: #f4f7f9; /* Light grey dashboard background */
+    --card-background: #fff;
+    --border-color: #eee;
+    --shadow-color: rgba(0, 0, 0, 0.05);
+    --transition-speed: 0.3s;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--background-light);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* WRAPPER AND LAYOUT */
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* SIDEBAR STYLES */
+.sidebar {
+    width: 250px;
+    background-color: var(--card-background);
+    color: var(--text-color);
+    padding: 20px 0;
+    box-shadow: 2px 0 5px var(--shadow-color);
+    flex-shrink: 0; 
+}
+
+.logo {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--text-color);
+    padding: 0 20px 30px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-icon {
+    color: var(--secondary-color);
+    font-size: 1.2em;
+}
+
+.menu-item {
+    padding: 15px 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 1rem;
+    font-weight: 500;
+    color: var(--text-light);
+    transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+
+/* Active State for Dashboard */
+.menu-item.active {
+    background-color: rgba(127, 0, 255, 0.1); /* Light purple background */
+    color: var(--primary-color);
+    border-right: 5px solid var(--primary-color);
+    font-weight: 600;
+}
+
+.menu-item:hover:not(.active) {
+    background-color: #f0f0f0;
+    color: var(--text-color);
+}
+
+.menu-item i {
+    font-size: 1.2rem;
+}
+
+/* MAIN CONTENT */
+.main-content {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* TOP NAVBAR */
+.top-navbar {
+    background-color: var(--card-background);
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px var(--shadow-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-left span {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+.nav-center {
+    flex-grow: 1;
+    max-width: 350px;
+    margin: 0 40px;
+}
+
+.search-box {
+    display: flex;
+    align-items: center;
+    background-color: var(--background-light);
+    border-radius: 20px;
+    padding: 8px 15px;
+    border: 1px solid var(--border-color);
+}
+
+.search-box i {
+    color: var(--text-light);
+    margin-right: 10px;
+}
+
+.search-box input {
+    border: none;
+    outline: none;
+    background: transparent;
+    font-size: 1rem;
+    width: 100%;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.nav-right i {
+    font-size: 1.4rem;
+    color: var(--text-light);
+    cursor: pointer;
+}
+
+/* DASHBOARD CONTAINER AND GRID */
+.dashboard-container {
+    padding: 30px;
+    display: grid;
+    /* 3-column layout: 2 wide columns for revenue/products, 1 narrow for customers/stats */
+    grid-template-columns: 2fr 1fr; 
+    grid-template-rows: auto auto; 
+    gap: 30px; /* Increased gap for better spacing */
+}
+
+.box {
+    background-color: var(--card-background);
+    border-radius: 18px; /* Slightly larger radius */
+    padding: 25px;
+    box-shadow: 0 8px 16px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Common Header Styles */
+.card-header {
+    display: flex;
+    flex-direction: column;
+}
+.revenue-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.revenue-header i {
+    color: var(--text-light);
+}
+
+h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+.card-header p, .stats-info {
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+}
+
+/* REVENUE CHART (Top-Left) */
+.box-revenue {
+    grid-column: 1 / 2; /* Span 1st column */
+}
+
+.box-revenue h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-color);
+    margin: 10px 0 20px;
+}
+
+.revenue-graph {
+    width: 100%;
+    height: auto;
+    max-height: 250px;
+    object-fit: contain;
+    margin-top: 10px;
+}
+
+/* CUSTOMERS BOX (Top-Right) */
+.box-customers {
+    grid-column: 2 / 3; /* Span 2nd column */
+}
+
+.customer-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px 10px;
+    text-align: center;
+}
+
+.chart-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chart-label {
+    font-size: 0.85rem;
+    color: var(--text-light);
+    margin-top: 10px;
+    font-weight: 500;
+}
+
+/* Doughnut Chart Styling (Pure CSS implementation) */
+.doughnut-chart {
+    --p: 0; /* percentage */
+    --c: var(--primary-color); /* color */
+    --b: 8px; /* border thickness */
+    --r: 35px; /* radius/size */
+    width: calc(2 * var(--r));
+    height: calc(2 * var(--r));
+    border-radius: 50%;
+    background: 
+        radial-gradient(closest-side, white calc(100% - var(--b)), transparent calc(100% - var(--b) + 1px)),
+        conic-gradient(var(--c) calc(var(--p) * 1%), var(--border-color) 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.doughnut-chart .chart-value {
+    color: var(--text-color);
+}
+
+.doughnut-chart[style*="--c:#7f00ff;"] .chart-value { color: var(--primary-color); }
+.doughnut-chart[style*="--c:#ff9900;"] .chart-value { color: var(--secondary-color); }
+.doughnut-chart[style*="--c:#f87171;"] .chart-value { color: var(--danger-color); }
+
+
+/* MINI STATS & PRODUCTS COLUMN (Bottom-Left) */
+.products-stats-column {
+    grid-column: 1 / 2; /* Span 1st column */
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.mini-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+}
+
+.stat-box {
+    background-color: var(--card-background);
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px var(--shadow-color);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+.stat-box i {
+    font-size: 1.2rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+.stat-box span {
+    font-size: 0.7rem;
+    color: var(--text-light);
+    margin-bottom: 2px;
+}
+.stat-box h4 {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-color);
+}
+
+/* TOP PRODUCTS TABLE */
+.box-products {
+    flex-grow: 1; 
+}
+
+.products-table {
+    width: 100%;
+}
+
+.table-header, .product-row {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr; 
+    align-items: center;
+    padding: 10px 0;
+    font-size: 0.9rem;
+}
+
+.table-header {
+    font-weight: 600;
+    color: var(--text-light);
+    padding-bottom: 15px;
+    margin-bottom: 5px;
+}
+
+.product-row {
+    border-top: 1px solid var(--border-color);
+}
+
+.product-details {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.product-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+
+.product-name {
+    font-weight: 500;
+    color: var(--text-color);
+    display: block;
+}
+
+.product-orders {
+    font-size: 0.8rem;
+    color: var(--text-light);
+    display: block;
+}
+
+/* STATS OVERVIEW (Bottom-Right) */
+.box-stats {
+    grid-column: 2 / 3; /* Span 2nd column */
+}
+
+.stat-bar-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+    gap: 15px;
+}
+
+.stat-label {
+    width: 60px; /* Fixed width for labels */
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
+.bar-container {
+    flex-grow: 1;
+    height: 8px;
+    background-color: var(--background-light);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.stat-bar {
+    height: 100%;
+    border-radius: 4px;
+}
+
+.women-bar { background-color: var(--secondary-color); } /* Used orange for Women as per image */
+.men-bar { background-color: var(--danger-color); } /* Used red for Men as per image */
+.kids-bar { background-color: var(--primary-color); } /* Used purple for Kids as per image */
+
+.stat-percent {
+    width: 40px; 
+    font-weight: 600;
+    color: var(--text-color);
+    text-align: right;
+    font-size: 0.95rem;
+}
+
+/* RESPONSIVENESS */
+@media (max-width: 1024px) {
+    .dashboard-container {
+        grid-template-columns: 1fr; /* Single column layout for main sections */
+    }
+    .box-revenue, .box-customers, .products-stats-column, .box-stats {
+        grid-column: 1 / -1; 
+    }
+    .top-navbar {
+        padding: 15px 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+    }
+    .wrapper {
+        flex-direction: column;
+    }
+    .top-navbar {
+        flex-wrap: wrap;
+    }
+    .nav-center {
+        order: 3; /* Move search bar to bottom row */
+        max-width: 100%;
+        margin: 10px 0 0 0;
+    }
+    .mini-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .customer-stats-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    .products-stats-column {
+        gap: 20px;
+    }
+    .dashboard-container {
+        padding: 15px;
+        gap: 20px;
+    }
+}
+@media (max-width: 480px) {
+     .customer-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    .mini-stats {
+        grid-template-columns: 1fr;
+    }
+    .table-header, .product-row {
+        /* Collapse table into a simpler layout on tiny screens */
+        grid-template-columns: 1.5fr 1fr 1fr; 
+    }
+    .sale-col, .price-col {
+        display: none; /* Hide less critical columns */
+    }
+}
+
+/* Sidebar Icon Hover Enhancements */
+
+/* 1. Ensure the icon transitions smoothly */
+.menu-item i {
+    font-size: 1.2rem;
+    /* Add transition for smooth movement */
+    transition: transform 0.2s ease-out, color 0.2s ease-out; 
+}
+
+/* 2. Style the hover state on the entire menu-item */
+.menu-item:hover i {
+    /* Lift the icon slightly */
+    transform: translateY(-2px); 
+    /* Change icon color to the primary color (or white if the background changes) */
+    color: var(--primary-color); 
+}
+
+/* 3. Special rule for the ACTIVE/SELECTED item and its hover state */
+.menu-item.active i,
+.menu-item:hover.active i {
+    /* Keep active icon white (or whatever color you use for active text) */
+    color: white; 
+    /* No lift effect on the active icon to distinguish it */
+    transform: none; 
+}
