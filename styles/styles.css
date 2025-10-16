@@ -487,3 +487,396 @@ h3 {
     /* No lift effect on the active icon to distinguish it */
     transform: none; 
 }
+
+/* ======= RESPONSIVE SIDEBAR USING CHECKBOX TRICK ======= */
+#sidebar-toggle {
+  display: none; /* Hide the checkbox */
+}
+
+.toggle-btn {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-color);
+  margin-right: 10px;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .wrapper {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 250px;
+    height: 100%;
+    background-color: var(--card-background);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    z-index: 200;
+  }
+
+  /* When checkbox is checked, show sidebar */
+  #sidebar-toggle:checked ~ .sidebar {
+    left: 0;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    width: 100%;
+  }
+
+  .toggle-btn {
+    display: block;
+  }
+
+  /* Optional: overlay effect */
+  #sidebar-toggle:checked ~ .main-content::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 150;
+  }
+}
+/* ... [Existing CSS code remains unchanged above this point] ... */
+
+/* Doughnut Chart Styling (Pure CSS implementation) */
+.doughnut-chart {
+    /* ... [Existing doughnut-chart styles] ... */
+    background: 
+        radial-gradient(closest-side, white calc(100% - var(--b)), transparent calc(100% - var(--b) + 1px)),
+        conic-gradient(var(--c) calc(var(--p) * 1%), var(--border-color) 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+.doughnut-chart .chart-value {
+    /* This style will be overridden by the specific color rules below */
+    color: var(--text-color); 
+}
+
+/* FIX: Ensure chart percentage text matches its color variable */
+.doughnut-chart[style*="--c:#7f00ff;"] .chart-value { color: var(--primary-color); }
+.doughnut-chart[style*="--c:#ff9900;"] .chart-value { color: var(--secondary-color); }
+.doughnut-chart[style*="--c:#f87171;"] .chart-value { color: var(--danger-color); }
+
+
+/* MINI STATS & PRODUCTS COLUMN (Bottom-Left) */
+/* ... [Existing CSS code remains unchanged here] ... */
+
+/* Sidebar Icon Hover Enhancements */
+
+.menu-item i {
+    font-size: 1.2rem;
+    /* Add transition for smooth movement */
+    transition: transform 0.2s ease-out, color 0.2s ease-out; 
+}
+
+.menu-item:hover i {
+    /* Lift the icon slightly */
+    transform: translateY(-2px); 
+    /* Change icon color to the primary color */
+    color: var(--primary-color); 
+}
+
+/* FIX: Active item's icon should use the same color as its text (primary-color) */
+.menu-item.active i,
+.menu-item:hover.active i {
+    /* Set icon color to the active text color (primary-color) */
+    color: var(--primary-color); 
+    /* Remove lift effect on the active icon */
+    transform: none; 
+}
+
+/* ======= RESPONSIVE SIDEBAR USING CHECKBOX TRICK (ACTIVATION) ======= */
+#sidebar-toggle {
+    display: none; /* Hide the checkbox */
+}
+
+.toggle-btn {
+    /* This rule must be changed for the button to show on mobile */
+    /* display: none; is kept here for desktop-first approach */
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: var(--text-color);
+    margin-right: 10px;
+    
+    /* Hide on large screens, show on mobile via media query */
+    display: none; 
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    /* 1. Show the Toggle Button */
+    .toggle-btn {
+        display: block; /* Show the menu icon on mobile */
+    }
+
+    /* 2. Desktop-style wrapper must be adjusted for fixed sidebar */
+    .wrapper {
+        flex-direction: column;
+        /* Add left margin/padding to prevent content from being under a fixed sidebar */
+        padding-left: 0; 
+    }
+
+    /* 3. Fixed Sidebar Positioning and Transition */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: -250px; /* Hidden off-screen */
+        width: 250px;
+        height: 100%;
+        box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+        transition: left 0.3s ease;
+        z-index: 200;
+        /* Ensure logo and content is scrollable if menu is long */
+        overflow-y: auto; 
+    }
+
+    /* 4. State: When checkbox is checked, show sidebar */
+    #sidebar-toggle:checked ~ .wrapper .sidebar {
+        left: 0;
+    }
+    
+    /* 5. State: Overlay effect */
+    #sidebar-toggle:checked ~ .wrapper .main-content::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.3);
+        z-index: 150;
+    }
+
+    /* Adjust main content positioning to align with the rest of your mobile layout */
+    .main-content {
+        width: 100%;
+    }
+
+    /* Adjust top-navbar to make space for the toggle button */
+    .top-navbar {
+        padding-left: 15px; /* Adjust padding to accommodate the toggle-btn */
+    }
+    
+    /* Ensure only the toggle-btn is visible and aligned */
+    .nav-left {
+        order: 2; /* Adjust order to center the title next to the button */
+    }
+    
+    /* Minor adjustments for mobile grid layout consistency */
+    .customer-stats-grid {
+        grid-template-columns: repeat(2, 1fr); /* Back to 2 columns on 768px for better fit */
+    }
+    
+}
+
+/* The existing media queries below 768px remain fine */
+
+@media (max-width: 480px) {
+    .mini-stats {
+        grid-template-columns: 1fr;
+    }
+    .table-header, .product-row {
+        grid-template-columns: 1.5fr 1fr 1fr; 
+    }
+    .sale-col, .price-col {
+        display: none; 
+    }
+}
+
+/* ... (Existing CSS) ... */
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+    /* ... (Keep existing styles for .toggle-btn and .sidebar) ... */
+    
+    .main-content {
+        /* FIX: Make main content scrollable and ensure it takes full height */
+        height: 100vh; 
+        overflow-y: auto; /* Enable vertical scrolling within this container */
+        
+        /* Account for the fixed sidebar */
+        padding-left: 0; 
+    }
+    
+    /* FIX: Top-navbar must be relative, but the dashboard container starts below it */
+    .top-navbar {
+        padding-left: 50px; 
+        position: sticky; /* Keep the header visible at the top */
+        top: 0;
+        z-index: 100;
+    }
+    
+    /* ... (rest of the 768px media query remains the same) ... */
+}
+
+/* ... (Existing CSS) ... */
+
+@media (max-width: 768px) {
+    /* ... (Existing .main-content and .top-navbar styles) ... */
+
+    /* Default State: Show the list icon */
+    .toggle-btn i {
+        /* Ensure default icon is visible */
+        content: "\f44a"; /* bi-list content code */
+        transition: transform 0.3s ease;
+    }
+
+    /* Checked State: When the sidebar is open, change the icon */
+    #sidebar-toggle:checked ~ .wrapper .main-content .top-navbar .toggle-btn i {
+        /* Hide the list icon using a transformation or visibility */
+        opacity: 0;
+        transform: rotate(90deg); /* Simple way to visually "remove" it */
+    }
+
+    /* New Icon: Use a pseudo-element to place the new icon */
+    #sidebar-toggle:checked ~ .wrapper .main-content .top-navbar .toggle-btn i::before {
+        /* CRITICAL: Use the content code for a back arrow (bi-arrow-left) */
+        content: "\f11d"; /* bi-arrow-left content code */
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%) rotate(0deg);
+        opacity: 1;
+        transition: all 0.3s ease;
+    }
+
+    /* ... (rest of the 768px media query remains the same) ... */
+
+    
+}
+
+/* ==============================================
+   PIXELSHOP DASHBOARD - RESPONSIVE SIDEBAR
+   WITH HAMBURGER ↔ BACK ARROW ICON SWITCH
+   ============================================== */
+
+/* ======= GENERAL RESET ======= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-color: #f8f9fa;
+  --card-background: #fff;
+  --text-color: #333;
+}
+
+/* ======= SIDEBAR TOGGLE LOGIC ======= */
+#sidebar-toggle {
+  display: none; /* hidden checkbox */
+}
+
+/* Toggle button (label for checkbox) */
+.toggle-btn {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  color: var(--text-color);
+  background: none;
+  border: none;
+  z-index: 300;
+  position: relative;
+}
+
+/* Icons inside toggle button */
+.toggle-btn i {
+  transition: all 0.3s ease;
+}
+
+/* Hide back arrow initially */
+.toggle-btn .back-icon {
+  display: none;
+}
+
+/* ======= MOBILE RESPONSIVE SECTION ======= */
+@media (max-width: 768px) {
+
+  /* show toggle button on mobile */
+  .toggle-btn {
+    display: block;
+    position: absolute;
+    top: 15px;
+    left: 15px;
+  }
+
+  /* sidebar default (hidden offscreen) */
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 250px;
+    height: 100%;
+    background-color: var(--card-background);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.1);
+    transition: left 0.3s ease;
+    z-index: 200;
+    overflow-y: auto;
+  }
+
+  /* show sidebar when checked */
+  #sidebar-toggle:checked ~ .wrapper .sidebar {
+    left: 0;
+  }
+
+  /* add dark overlay when sidebar open */
+  #sidebar-toggle:checked ~ .wrapper .main-content::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 150;
+  }
+
+  /* ======= ICON SWITCH ======= */
+  /* Hide list icon, show back arrow */
+  #sidebar-toggle:checked + .toggle-btn .list-icon {
+    display: none;
+  }
+
+  #sidebar-toggle:checked + .toggle-btn .back-icon {
+    display: inline;
+  }
+
+  /* Optional fade + rotate animation */
+  .toggle-btn i {
+    opacity: 1;
+    transform: rotate(0deg);
+    transition: all 0.3s ease;
+  }
+
+  #sidebar-toggle:checked + .toggle-btn .list-icon {
+    opacity: 0;
+    transform: rotate(90deg);
+  }
+
+  #sidebar-toggle:checked + .toggle-btn .back-icon {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+}
+
+/* ======= OPTIONAL: FIXED TOGGLE WHEN SCROLLING ======= */
+.toggle-btn.fixed {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 1000;
+  background: white;
+  border-radius: 50%;
+  padding: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
